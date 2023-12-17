@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Peter Dimler" />
+
+<meta name="date" content="2023-12-14" />
+
+<title>EDAmigo</title>
+
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.27/datatables.js"></script>
+<link href="site_libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="ICR_Project.html">ICR Analysis</a>
+</li>
+<li>
+  <a href="EDAmigo.html">EDAmigo</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">EDAmigo</h1>
+<h4 class="author">Peter Dimler</h4>
+<h4 class="date">2023-12-14</h4>
+
+</div>
+
+
+<div id="package-overview" class="section level1">
+<h1>Package Overview</h1>
+<p>R’s console based interface makes it a great tool for interactively
+exploring small data sets. Packages like tidyverse and DescTools contain
+well-thought-out functions for wrangling, summarizing, and visualizing
+data. Applying these same tools to large datasets, however, can result
+in a tedious exploratory data analysis (EDA). A lot of time can be spent
+tweaking throw away code in search of possible relationships and
+potential issues within a given dataset. The goal of EDAmigo was to
+create a package that pairs well with existing tools and helps the user
+interactively review their data. Changes made to the data using EDAmigo
+functions are store in user friendly formats.</p>
+<ul>
+<li>EDAmigo website: <a href="https://github.com/WhiskeyYankee/EDAmigo"
+class="uri">https://github.com/WhiskeyYankee/EDAmigo</a></li>
+</ul>
+</div>
+<div id="my-contributions" class="section level1">
+<h1>My Contributions</h1>
+<p>My focus for the EDAmigo package was on transformations for numeric
+data. Numeric transformations can be helpful for addressing
+non-normality, skewness, and outliers in data that can be problematic
+downstream in the modeling process. Box-Cox methods have been
+implemented in various R packages such as DescTools, EnvStats, MASS, and
+tidymodels. My implementation (EDAmigo::boxCox) differs from these in
+that it aims to ease the EDA process by computing the Box Cox
+transformations for each of the specified columns in a matrix or
+dataframe at the same time. The function uses the two-parameter Box-Cox
+transformation to account for any numeric columns that have either
+negative values or 0s and the function also outputs asymptotically
+constructed confidence intervals for the power transformation parameter
+lambda_1 so users can easily select a simpler alternative power if they
+choose to. Normality is tested for both the raw and transformed data
+using the Anderson-Darling method. Additionally, I implemented a
+function that visualizes the data transformations and either presents 1
+chart at a time to the user with prompts to advance to the next chart or
+stores the output in a list.</p>
+</div>
+<div id="demo" class="section level1">
+<h1>Demo</h1>
+<p>For this demo we are going to use the state.x77 data from the
+datasets package which has 1 row for each state and 8 columns with state
+specific metrics.</p>
+<div id="step-1" class="section level2">
+<h2>Step 1:</h2>
+<p><strong>Load the EDAmigo package and State data:</strong></p>
+<pre class="r"><code>library(EDAmigo)
+state_data = as.data.frame(state.x77)
+names(state_data) = c(&quot;Population&quot;, &quot;Income&quot;, &quot;Illiteracy&quot;, &quot;Life_Exp&quot;, &quot;Murder&quot;, &quot;HS_Grad&quot;, &quot;Frost&quot;, &quot;Area&quot;)</code></pre>
+</div>
+<div id="step-2" class="section level2">
+<h2>Step 2:</h2>
+<p><strong>Compute potential transformations:</strong></p>
+<p>The default setting in the boxCox function is to filter out
+transformations that do not improve normality or reduce outliers. We
+will be setting filter to FALSE to compare the results to some of the
+other package implementations.</p>
+<pre class="r"><code>EDAmigo_results_1 = boxCox(state_data, lambda = seq(-5,5,0.01), FILTER = FALSE)</code></pre>
+<pre><code>## Warning in boxCox(state_data, lambda = seq(-5, 5, 0.01), FILTER = FALSE): One or
+## more of the variables did not converge in the specified lambda_1 range</code></pre>
+<pre class="r"><code>EDAmigo_results_1$boxCox_Results %&gt;% DT::datatable() %&gt;% DT::formatRound(columns = 3:10, digits=3)</code></pre>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-09a0c488c5bb5f9888c6" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-09a0c488c5bb5f9888c6">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8"],[1,2,3,4,5,6,7,8],["Population","Income","Illiteracy","Life_Exp","Murder","HS_Grad","Frost","Area"],[0,0,0,0,0,0,0.001,0],[0.0300000000000002,0.52,-0.38,4.59,0.61,1.92,0.76,0.25],[-0.24,-1.15,-1.05,null,0.100000000000001,0.11,0.48,0.0700000000000003],[0.3,2.13,0.27,null,1.15,3.77,1.11,0.43],[3.49724155740601,0.332175949777223,2.06064521414572,0.407468450686807,0.802350582993476,0.74529204363234,0.636763845007998,5.20455195735885],[0.370586064057164,0.391196374618687,1.09089093588354,0.409453669415008,0.733678616341358,0.498412928322331,0.97439704477241,1.24830489383392],[7.16022242873377e-09,0.504288992575205,2.55196267412939e-05,0.336200955444116,0.0351759218162852,0.0488909959928788,0.0914829760628357,4.76863304004785e-13],[0.411129659655011,0.367584639080523,0.00666839803885128,0.33254309759492,0.0522802556963461,0.201348017199681,0.0130449269350741,0.00269522820015168],[5,1,0,0,0,0,0,3],[0,1,0,0,0,0,0,7]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>col_num<\/th>\n      <th>col_name<\/th>\n      <th>lambda_2<\/th>\n      <th>lambda_1<\/th>\n      <th>lambda_1_lwr<\/th>\n      <th>lambda_1_upr<\/th>\n      <th>raw_anderson_darling_stat<\/th>\n      <th>trans_anderson_darling_stat<\/th>\n      <th>raw_anderson_darling_p_val<\/th>\n      <th>trans_anderson_darling_p_val<\/th>\n      <th>raw_outlier_est<\/th>\n      <th>trans_outlier_est<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":7,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":8,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":9,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":10,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[1,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render","options.columnDefs.5.render","options.columnDefs.6.render","options.columnDefs.7.render"],"jsHooks":[]}</script>
+<p>The Waring that appears tells us that one or more of the variable did
+not converge in the specified lambda_1 range. In this case, it’s the
+Life Exp variable. If the FILTER is set to TRUE, then it will be
+filtered out of the results. The tidymodels package has the step_BoxCox
+function which works really well for applying box cox transformations to
+a set of predictors as part of the modeling workflow. It is a little
+trickier to work with if the user just wants to review multiple
+transformations to determine if they work well with the data. Let’s
+compare the results of the boxCox function from the EDAmigo package
+against results of the step_BoxCox function:</p>
+<pre class="r"><code># Load Library
+library(tidymodels)
+
+# Create Recipe
+rec &lt;- recipe(~., data = state_data)
+## Use the step_BoxCox function to determine transformations
+bc_trans &lt;- step_BoxCox(rec, all_numeric(), limits = c(-3,3))
+## Prep the data
+bc_estimates &lt;- prep(bc_trans, training = state_data)</code></pre>
+<pre><code>## Warning: Non-positive values in selected variable.</code></pre>
+<pre><code>## Warning: No Box-Cox transformation could be estimated for: `Life_Exp`, `Frost`</code></pre>
+<pre class="r"><code>## Extraxt the results
+bc_data &lt;- bake(bc_estimates, state_data)
+## Tidy the Results 
+(tidymodel_est = tidy(bc_estimates, number = 1))</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##   terms        value id          
+##   &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;       
+## 1 Population  0.0347 BoxCox_mp7Tk
+## 2 Income      0.524  BoxCox_mp7Tk
+## 3 Illiteracy -0.379  BoxCox_mp7Tk
+## 4 Murder      0.606  BoxCox_mp7Tk
+## 5 HS_Grad     1.92   BoxCox_mp7Tk
+## 6 Area        0.250  BoxCox_mp7Tk</code></pre>
+<p>The step_BoxCox returns 6 box-cox transformations. The function uses
+a 1 parameter transformation and was unable to find a transformation for
+the Frost data since it contained 0s. The EDAmigo handled this by using
+a shift parameter of 0.001. Similar to the EDAmigo implementation, the
+tidymodels implementation was unable to find a solution for the Life Exp
+variable in the default lambda range. The 6 transformations returned are
+nearly identical to those reported by the EDAmigo package and the
+differences are due variations in the implementation approaches.</p>
+</div>
+<div id="step-3" class="section level2 tabset">
+<h2 class="tabset">Step 3:</h2>
+<p><strong>Select desirable transformations:</strong></p>
+<p>Suppose that we want to determine which transformations will help
+improve normality and reduce outliers. The tidymodels output has all of
+the lambda values but it doesn’t indicate which ones offer improvements.
+The output can be plotted to compare the distributions of the raw and
+transformed data but this has to be done one variable at a time. EDAmigo
+has features that help with this process. One such feature is the filter
+option which filters out transformations that don’t result improved
+normality (Using the Anderson Darling Statistic) and reduce the number
+of outliers. The filter option also sorts the results to indicate which
+transformations have the best results.</p>
+<pre class="r"><code>EDAmigo_results_2 = boxCox(state_data, lambda = seq(-5,5,0.01), FILTER = TRUE)</code></pre>
+<pre><code>## Warning in boxCox(state_data, lambda = seq(-5, 5, 0.01), FILTER = TRUE): One or
+## more of the variables did not converge in the specified lambda_1 range</code></pre>
+<pre class="r"><code>EDAmigo_results_2$boxCox_Results %&gt;% DT::datatable() %&gt;% DT::formatRound(columns = 3:10, digits=3)</code></pre>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-8d71b017b2320c1ecc40" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8d71b017b2320c1ecc40">{"x":{"filter":"none","vertical":false,"data":[["1","6","5","3"],[1,6,5,3],["Population","HS_Grad","Murder","Illiteracy"],[0,0,0,0],[0.0300000000000002,1.92,0.61,-0.38],[-0.24,0.11,0.100000000000001,-1.05],[0.3,3.77,1.15,0.27],[3.49724155740601,0.74529204363234,0.802350582993476,2.06064521414572],[0.370586064057164,0.498412928322331,0.733678616341358,1.09089093588354],[7.16022242873377e-09,0.0488909959928788,0.0351759218162852,2.55196267412939e-05],[0.411129659655011,0.201348017199681,0.0522802556963461,0.00666839803885128],[5,0,0,0],[0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>col_num<\/th>\n      <th>col_name<\/th>\n      <th>lambda_2<\/th>\n      <th>lambda_1<\/th>\n      <th>lambda_1_lwr<\/th>\n      <th>lambda_1_upr<\/th>\n      <th>raw_anderson_darling_stat<\/th>\n      <th>trans_anderson_darling_stat<\/th>\n      <th>raw_anderson_darling_p_val<\/th>\n      <th>trans_anderson_darling_p_val<\/th>\n      <th>raw_outlier_est<\/th>\n      <th>trans_outlier_est<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":7,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":8,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":9,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":10,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[1,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render","options.columnDefs.5.render","options.columnDefs.6.render","options.columnDefs.7.render"],"jsHooks":[]}</script>
+<p>The previous warning from the life expectancy variable still appears
+so the user knows that one or more of the filtered out values are not
+converging. The results now only have 4 transformations. The box plots
+for all of the transformations can be generated at the same time using
+the boxCox_Vis function. Doing this below, we can see that the only four
+transformations kept are those that have both improved normality and
+reduced outliers.</p>
+<pre class="r"><code>box_plots = boxCox_Vis(state_data, EDAmigo_results_1, interactive_view = FALSE)</code></pre>
+<div id="population" class="section level3">
+<h3>Population</h3>
+<pre class="r"><code>box_plots[[1]]</code></pre>
+<p><img src="EDAmigo_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="income" class="section level3">
+<h3>Income</h3>
+<pre class="r"><code>box_plots[[2]]</code></pre>
+<p><img src="EDAmigo_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="illiteracy" class="section level3">
+<h3>Illiteracy</h3>
+<pre class="r"><code>box_plots[[3]]</code></pre>
+<p><img src="EDAmigo_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="life-expectancy" class="section level3">
+<h3>Life Expectancy</h3>
+<pre class="r"><code>box_plots[[4]]</code></pre>
+<p><img src="EDAmigo_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="murder" class="section level3">
+<h3>Murder</h3>
+<pre class="r"><code>box_plots[[5]]</code></pre>
+<p><img src="EDAmigo_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="high-school-graduates" class="section level3">
+<h3>High School Graduates</h3>
+<pre class="r"><code>box_plots[[6]]</code></pre>
+<p><img src="EDAmigo_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="frost" class="section level3">
+<h3>Frost</h3>
+<pre class="r"><code>box_plots[[7]]</code></pre>
+<p><img src="EDAmigo_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="area" class="section level3">
+<h3>Area</h3>
+<pre class="r"><code>box_plots[[8]]</code></pre>
+<p><img src="EDAmigo_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
