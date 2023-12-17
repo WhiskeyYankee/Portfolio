@@ -1,16 +1,12 @@
 ---
-title: "My Website"
+title: "Peter Dimler - Portfolio"
 ---
 
-Hello, Website!
+# Welcome!
+This is a simple portfolio for Peter Dimler (GitHub Alias: WhiskeyYankee) to showcase a few notable projects that I have worked on:
 
-For more information about simple R Markdown websites, please read the documentation at https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html.
+* **ICR_Project:** In the summer of 2023 I enrolled in the [Identifying Age Related Conditions]<https://www.kaggle.com/competitions/icr-identify-age-related-conditions/overview/description> code competition on Kaggle. [My submission]<https://www.kaggle.com/code/whiskeyyankee/notebook06df57f4df/report?scriptVersionId=137914322> ranked in the top 16% and I prepared a report that documents my efforts and explains my findings. 
 
-Please also note that simple R Markdown sites are _not_ based on **blogdown**. They are probably good for websites with only a few Rmd documents. For larger-scale and more sophisticated websites (such as blogs), you may want to use **blogdown** instead: https://github.com/rstudio/blogdown.
+* **EDAmigo:** As part of the Reproducible Computations class I took at Texas A&M in the fall of 2023, I worked with a team to build an R package that supports the EDA process. My contributions to this project focused on numeric data transformations. The EDAmigo tab outlines how the functions I built work. 
 
-
-```{r, eval = FALSE, echo=FALSE}
-library(EDAmigo)
-
-boxCox(fires)
-```
+* **Stroke Analysis:** Another notable project that I completed during my masters was an analysis of stroke severity. I analyzed roughly 10GB of data from 400 different stroke patients including medical and social history, proteomics, and genetic data in the form of SNPs. The goal of the study was to discover medically relevant details that could further the understanding of stroke severity and treatment. The data made available to me was part of a larger study that is still ongoing and I won’t be able to share my report via my portfolio until June of 2024.

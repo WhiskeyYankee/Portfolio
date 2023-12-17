@@ -1,9 +1,11 @@
 output_dir: "docs"
 name: "my-website"
 navbar:
-  title: "My Website"
+  title: ""
   left:
     - text: "Home"
       href: index.html
-    - text: "About"
-      href: about.html
+    - text: "ICR Analysis"
+      href: ICR_Project.html
+    - text: "EDAmigo"
+      href: EDAmigo.html
