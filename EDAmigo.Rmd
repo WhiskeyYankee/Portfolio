@@ -40,7 +40,7 @@ EDAmigo_results_1 = boxCox(state_data, lambda = seq(-5,5,0.01), FILTER = FALSE)
 EDAmigo_results_1$boxCox_Results %>% DT::datatable() %>% DT::formatRound(columns = 3:10, digits=3)
 ```
 
-The Waring that appears tells us that one or more of the variable did not converge in the specified lambda_1 range. In this case, it's the Life Exp variable. If the FILTER is set to TRUE, then it will be filtered out of the results. The tidymodels package has the step_BoxCox function which works really well for applying box cox transformations to a set of predictors as part of the modeling workflow. It is a little trickier to work with if the user just wants to review multiple transformations to determine if they work well with the data. Let's compare the results of the boxCox function from the EDAmigo package against results of the step_BoxCox function:
+The warning that appears tells us that one or more of the variables did not converge in the specified lambda_1 range. In this case, it's the Life Exp variable. If the FILTER is set to TRUE, then it will be filtered out of the results. The tidymodels package has the step_BoxCox function which works really well for applying box cox transformations to a set of predictors as part of the modeling workflow. It is a little trickier to work with if the user just wants to review multiple transformations to determine if they work well with the data. Let's compare the results of the boxCox function from the EDAmigo package against results of the step_BoxCox function:
 
 
 ```{r, eval=TRUE, message=FALSE}
