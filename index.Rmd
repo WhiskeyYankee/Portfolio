@@ -5,7 +5,7 @@ title: "Peter Dimler - Portfolio"
 # Welcome!
 This is a simple portfolio for Peter Dimler (GitHub Alias: WhiskeyYankee) to showcase a few notable projects that I have worked on:
 
-* **ICR_Project:** In the summer of 2023 I enrolled in the [Identifying Age Related Conditions]<https://www.kaggle.com/competitions/icr-identify-age-related-conditions/overview/description> code competition on Kaggle. [My submission]<https://www.kaggle.com/code/whiskeyyankee/notebook06df57f4df/report?scriptVersionId=137914322> ranked in the top 16% and I prepared a report that documents my efforts and explains my findings. 
+* **ICR_Project:** In the summer of 2023 I enrolled in the [Identifying Age Related Conditions](https://www.kaggle.com/competitions/icr-identify-age-related-conditions/overview/description) code competition on Kaggle. [My submission](https://www.kaggle.com/code/whiskeyyankee/notebook06df57f4df/report?scriptVersionId=137914322) ranked in the top 16% and I prepared a report that documents my efforts and explains my findings. 
 
 * **EDAmigo:** As part of the Reproducible Computations class I took at Texas A&M in the fall of 2023, I worked with a team to build an R package that supports the EDA process. My contributions to this project focused on numeric data transformations. The EDAmigo tab outlines how the functions I built work. 
 
