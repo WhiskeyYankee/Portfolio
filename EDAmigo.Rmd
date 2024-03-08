@@ -12,7 +12,7 @@ library(DT)
 ```
 
 # Package Overview
-R’s console based interface makes it a great tool for interactively exploring small data sets. Packages like tidyverse and DescTools contain well-thought-out functions for wrangling, summarizing, and visualizing data. Applying these same tools to large datasets, however, can result in a tedious exploratory data analysis (EDA). A lot of time can be spent tweaking throw away code in search of possible relationships and potential issues within a given dataset. The goal of EDAmigo was to create a package that pairs well with existing tools and helps the user interactively review their data. Changes made to the data using EDAmigo functions are store in user friendly formats.
+R’s console based interface makes it a great tool for interactively exploring small data sets. Packages like tidyverse and DescTools contain well-thought-out functions for wrangling, summarizing, and visualizing data. Applying these same tools to large datasets, however, can result in a tedious exploratory data analysis (EDA). A lot of time can be spent tweaking throw away code in search of possible relationships and potential issues within a given dataset. The goal of EDAmigo was to create a package that pairs well with existing tools and helps the user interactively review their data. Changes made to the data using EDAmigo functions are stored in user friendly formats.
 
 * EDAmigo website: <https://github.com/WhiskeyYankee/EDAmigo>
 
