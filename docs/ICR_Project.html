@@ -518,8 +518,8 @@ training data has 8 predictors with missing values which affects 69 rows
 or roughly 11% of the observations. The predictors with missing values
 as well as a count of how many observations are missing a value for the
 predictor is shown in the table below.</p>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-72883c441327f2a7ee73" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-72883c441327f2a7ee73">{"x":{"filter":"none","vertical":false,"data":[["BQ","EL","CC","CB","FS","DU","FC","FL"],[60,60,3,2,2,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>pred<\/th>\n      <th>nas<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-70a84b36cc1c2329db83" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-70a84b36cc1c2329db83">{"x":{"filter":"none","vertical":false,"data":[["BQ","EL","CC","CB","FS","DU","FC","FL"],[60,60,3,2,2,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>pred<\/th>\n      <th>nas<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 <p>The project goal is to create a model that accurately predicts if a
 patient has an age related condition. In practice, it’s possible that
 new patients will also have missing health characteristics. For example,
@@ -784,8 +784,8 @@ interactions were considered in the XGBoost model for both pass one (no
 down sampling) and pass two (down sampling) and the model performance
 was again evaluated against the hold out data. The results are shown
 below:</p>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1ae99c2093022118bfd6" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1ae99c2093022118bfd6">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4"],[1,2,3,4],[false,false,true,true],[false,true,false,true],[0.41,0.425,0.29,0.36]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>run<\/th>\n      <th>Downsample<\/th>\n      <th>Interactions<\/th>\n      <th>BLL<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a4204819ea13e372ee1e" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a4204819ea13e372ee1e">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4"],[1,2,3,4],[false,false,true,true],[false,true,false,true],[0.41,0.425,0.29,0.36]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>run<\/th>\n      <th>Downsample<\/th>\n      <th>Interactions<\/th>\n      <th>BLL<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>When using the XGBoost model framework, including pairwise
 relationships does not appear to lead to an improvement in model
 performance. This does not mean, however, that there are no
