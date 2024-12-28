@@ -9,3 +9,5 @@ navbar:
       href: ICR_Project.html
     - text: "EDAmigo"
       href: EDAmigo.html
+    - text: "Stroke Analysis"
+      href: STROKE_SCRUBBED.html
