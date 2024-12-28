@@ -1,5 +1,5 @@
 ---
-title: "Stroke Analysis Scrubbed"
+title: "Stroke Analysis"
 author: "Peter Dimler"
 date: "2023-09-10"
 output: 
